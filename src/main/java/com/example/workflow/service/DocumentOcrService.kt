@@ -104,15 +104,15 @@ class DocumentOcrService : JavaDelegate {
 //                )
 //            ) {
 
-            val dataJson = response.getJSONObject("data")
+//            val dataJson = response.getJSONObject("data")
 
             WorkflowLogger.info(
                 logger,
                 "Document Verification Invoked",
-                "Response Data $dataJson"
+                "Response Data $response"
             )
 
-            execution.setVariable(Constants.`OCR RESPONSE`, dataJson.toMap())
+            execution.setVariable(Constants.`OCR RESPONSE`, response) //dataJson.toMap())
 
 //            } else {
 //
