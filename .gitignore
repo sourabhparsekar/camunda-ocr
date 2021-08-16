@@ -37,5 +37,6 @@ logs/
 /application.properties
 /application.yaml
 /.mvn/wrapper/maven-wrapper.jar
-*.db
+/camunda-ocr-h2-database.trace.db
+/camunda-ocr-h2-database.mv.db
 

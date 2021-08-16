@@ -53,7 +53,7 @@ class DocumentOcrService : JavaDelegate {
 
             formData.add(
                 "isOverlayRequired",
-                false
+                true
             )
 
             formData.add(

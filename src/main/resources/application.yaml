@@ -53,5 +53,5 @@ camunda:
 # OCR Space
 ocr-space:
   key: <add your key here>
-  base-url: https://api.ocr.space
+  base-url: http://api.ocr.space
   post-url: ${ocr-space.base-url}/parse/image
