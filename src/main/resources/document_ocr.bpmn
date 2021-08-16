@@ -4,15 +4,15 @@
     <bpmn:startEvent id="StartEvent_1">
       <bpmn:outgoing>Flow_11sxr74</bpmn:outgoing>
     </bpmn:startEvent>
-    <bpmn:task id="Activity_1v8g77b" name="Document OCR">
+    <bpmn:task id="documentOcrService" name="Document OCR">
       <bpmn:incoming>Flow_11sxr74</bpmn:incoming>
       <bpmn:outgoing>Flow_0fgpzcs</bpmn:outgoing>
     </bpmn:task>
-    <bpmn:sequenceFlow id="Flow_11sxr74" sourceRef="StartEvent_1" targetRef="Activity_1v8g77b" />
+    <bpmn:sequenceFlow id="Flow_11sxr74" sourceRef="StartEvent_1" targetRef="documentOcrService" />
     <bpmn:endEvent id="Event_1vp2es0">
       <bpmn:incoming>Flow_0fgpzcs</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:sequenceFlow id="Flow_0fgpzcs" sourceRef="Activity_1v8g77b" targetRef="Event_1vp2es0" />
+    <bpmn:sequenceFlow id="Flow_0fgpzcs" sourceRef="documentOcrService" targetRef="Event_1vp2es0" />
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_0wnydpp">
@@ -27,7 +27,7 @@
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
         <dc:Bounds x="179" y="99" width="36" height="36" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1v8g77b_di" bpmnElement="Activity_1v8g77b">
+      <bpmndi:BPMNShape id="Activity_1v8g77b_di" bpmnElement="documentOcrService">
         <dc:Bounds x="270" y="77" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_1vp2es0_di" bpmnElement="Event_1vp2es0">
