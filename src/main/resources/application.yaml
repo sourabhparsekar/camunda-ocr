@@ -32,6 +32,12 @@ spring:
     console:
       enabled: true
       path: /h2-console
+  servlet:
+    multipart:
+      enabled: true
+      file-size-threshold: 1MB
+      max-file-size: 1MB
+      max-request-size: 1MB
 
 # Camunda Configuration
 camunda:
@@ -42,6 +48,10 @@ camunda:
     metrics:
       db-reporter-activate: false
     database:
-      schema-update: create
+      schema-update: drop-create
 
 # OCR Space
+ocr-space:
+  key: <add your key here>
+  base-url: https://api.ocr.space
+  post-url: ${ocr-space.base-url}/parse/image

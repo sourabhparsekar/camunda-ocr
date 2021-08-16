@@ -37,3 +37,5 @@ logs/
 /application.properties
 /application.yaml
 /.mvn/wrapper/maven-wrapper.jar
+*.db
+

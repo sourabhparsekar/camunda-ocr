@@ -1,5 +1,6 @@
 package com.example.workflow.controller
 
+import com.example.workflow.utils.Constants
 import org.camunda.bpm.engine.variable.impl.value.FileValueImpl
 import org.camunda.bpm.engine.variable.type.FileValueType
 import org.springframework.http.MediaType
@@ -12,46 +13,36 @@ import javax.validation.constraints.NotEmpty
 import javax.validation.constraints.NotNull
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.Parameter
+import io.swagger.v3.oas.annotations.responses.ApiResponse
 import org.camunda.bpm.engine.HistoryService
 import org.camunda.bpm.engine.RuntimeService
+import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 
 @RestController
 class DocumentOcrController {
 
+    private val logger = LoggerFactory.getLogger(this.javaClass)
+
     @Autowired
     private lateinit var runtimeService: RuntimeService
 
-    @Autowired
-    private lateinit var historyService: HistoryService
-
     @PostMapping(
-            value = ["/ocr-document"],
+            value = ["/document"],
             consumes = ["multipart/form-data", MediaType.APPLICATION_OCTET_STREAM_VALUE]
     )
-    @Operation(summary = "Submit Documents for Verification")
-    fun verifyDocuments(
-            @Parameter(
-                    required = true,
-                    name = "firstName",
-                    description = "Enter mandatory First Name"
-            ) firstName: @NotEmpty(message = "First Name is required field") String,
-            @Parameter(required = true, name = "lastName", description = "Enter mandatory Last Name") lastName: @NotEmpty(
-                    message = "Last Name is required field"
-            ) String,
+    @Operation(summary = "Perform Document OCR")
+    fun ocrDocuments(
             @Parameter(
                     required = true,
                     name = "document",
-                    description = "Upload mandatory Document File"
-            ) document: @NotNull(message = "Document is mandatory") MultipartFile
+                    description = "Upload Document Image to be OCRed"
+            ) document: @NotNull(message = "Document/Image is mandatory") MultipartFile
     ): ResponseEntity<*>? {
 
         val documentName: String = document.originalFilename;
-
-        val requestVariables = HashMap<String, Any>();
-        requestVariables["firstname"] = firstName;
-        requestVariables["lastname"] = lastName;
 
         var documentFileValue = FileValueImpl(
                 document.bytes,
@@ -60,20 +51,20 @@ class DocumentOcrController {
                 MimetypesFileTypeMap().getContentType(documentName),
                 Charset.defaultCharset().name()
         )
-        requestVariables["document"] = documentFileValue
 
         var instance = runtimeService
                 .createProcessInstanceByKey("OcrDocument")
-                .setVariables(requestVariables)
+                .setVariable(Constants.DOCUMENT, documentFileValue)
                 .executeWithVariablesInReturn()
 
         val processInstanceId = instance.processInstanceId
+
         val responseVariables = instance.variables
 
         val data = processInstanceId
 
         return if (data != null) {
-            ResponseEntity.ok().body("OCR Completed")
+            ResponseEntity.ok().body("OCR Completed Successfully.")
         } else {
             ResponseEntity.unprocessableEntity().body("OCR processing failed")
         }

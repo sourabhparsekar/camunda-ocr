@@ -9,8 +9,6 @@ This standalone process application is a kotlin example using [Camunda Workflow]
 & [Springboot](https://spring.io/projects/spring-boot) with JUnit5 Test cases. 
 As for the use case, we will try to _ocr a document using open [OCR Space API](https://ocr.space/OCRAPI)_.
 
-
-
 ## Camunda Workflow:
 As per [Wikipedia](https://en.wikipedia.org/wiki/Camunda), Camunda Platform is an open-source workflow
 and decision automation platform. Camunda Platform ships with tools for creating workflow and decision 
@@ -27,16 +25,15 @@ Workflow usage, you can refer to below blogs-
 * [BPMN Engines: A Brief Introduction](https://medium.com/nerd-for-tech/bpmn-engines-a-brief-introduction-2123b5e15435)
 * [Hands-on - Camunda Workflow Spring-Boot Application](https://medium.com/nerd-for-tech/bpmn2-0-camunda-workflow-spring-boot-application-2381f3d42e5f)  
 
+
+
 ***
 ## Code Configuration
 
-### Camunda Springboot Initializer
-
-Camunda Springboot project can be created by [Camunda Platform Initializer](https://start.camunda.com/) which contains Spring Boot framework. This makes Spring ready to work inside your camunda workflow application.
-
-These starters pre-configure the Camunda process engine, REST API and Web applications, so they can easily be used in the standalone process application.
-
-For detailed notes and guides on setup, refer [Camunda Docs-Springboot](https://docs.camunda.org/get-started/spring-boot/)
+### Application Configuration
+> Spring-Boot:  (v2.4.3)  
+Camunda Platform: (v7.15.0)  
+Camunda Platform Spring Boot Starter: (v7.15.0)
 
 ### Default Ports
 
