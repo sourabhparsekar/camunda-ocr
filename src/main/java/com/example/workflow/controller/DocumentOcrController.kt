@@ -63,8 +63,8 @@ class DocumentOcrController {
 
         val data = processInstanceId
 
-        return if (data != null) {
-            ResponseEntity.ok().body("OCR Completed Successfully.")
+        return if (responseVariables.containsKey(Constants.`OCR RESPONSE`)) {
+            ResponseEntity.ok().body(responseVariables[Constants.`OCR RESPONSE`])
         } else {
             ResponseEntity.unprocessableEntity().body("OCR processing failed")
         }

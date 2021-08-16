@@ -112,7 +112,7 @@ class DocumentOcrService : JavaDelegate {
                 "Response Data $response"
             )
 
-            execution.setVariable(Constants.`OCR RESPONSE`, response) //dataJson.toMap())
+            execution.setVariable(Constants.`OCR RESPONSE`, response.toMap())
 
 //            } else {
 //
