@@ -22,7 +22,7 @@
     <bpmn:sequenceFlow id="Flow_0bfha6m" sourceRef="documentOcrService" targetRef="Gateway_0fih3g7" />
     <bpmn:sequenceFlow id="Flow_0utbjgk" name="Yes" sourceRef="Gateway_0fih3g7" targetRef="Activity_01u5tno" />
     <bpmn:sequenceFlow id="Flow_12yqwwo" name="No" sourceRef="Gateway_0fih3g7" targetRef="Activity_0sxtgns">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${'ocr-response-status' == true}</bpmn:conditionExpression>
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">#{ocr_response_status == 'true'}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="Flow_0hukgy7" sourceRef="Activity_01u5tno" targetRef="Event_1n2pbwm" />
     <bpmn:endEvent id="Event_1fw82k7">

@@ -1,6 +1,7 @@
 package com.example.workflow.controller
 
 import com.example.workflow.utils.Constants
+import com.example.workflow.utils.WorkflowLogger
 import org.camunda.bpm.engine.variable.impl.value.FileValueImpl
 import org.camunda.bpm.engine.variable.type.FileValueType
 import org.springframework.http.MediaType
@@ -44,6 +45,8 @@ class DocumentOcrController {
 
         val documentName: String = document.originalFilename;
 
+        WorkflowLogger.info(logger, "OCR Request received", "File: $documentName")
+
         var documentFileValue = FileValueImpl(
                 document.bytes,
                 FileValueType.FILE,
@@ -58,15 +61,16 @@ class DocumentOcrController {
                 .executeWithVariablesInReturn()
 
         val processInstanceId = instance.processInstanceId
+        WorkflowLogger.info(logger, "Camunda Workflow Completed", "Instance Id: $processInstanceId")
 
         val responseVariables = instance.variables
 
-        val data = processInstanceId
-
-        return if (responseVariables.containsKey(Constants.`OCR RESPONSE`)) {
+        return if (responseVariables.containsKey(Constants.`OCR RESPONSE STATUS`)
+            && responseVariables[Constants.`OCR RESPONSE STATUS`] as Boolean
+        ) {
             ResponseEntity.ok().body(responseVariables[Constants.`OCR RESPONSE`])
         } else {
-            ResponseEntity.unprocessableEntity().body("OCR processing failed")
+            ResponseEntity.badRequest().body(responseVariables[Constants.`OCR RESPONSE`])
         }
 
     }
