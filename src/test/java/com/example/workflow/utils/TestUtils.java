@@ -1,37 +1,22 @@
 package com.example.workflow.utils;
 
 import org.jetbrains.annotations.NotNull;
-import org.json.JSONObject;
-import org.mockserver.client.server.MockServerClient;
-import org.mockserver.matchers.Times;
-import org.mockserver.model.Header;
-import org.mockserver.model.HttpRequest;
-import org.mockserver.model.HttpResponse;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.util.UriComponentsBuilder;
-
-import java.net.URI;
-import java.util.concurrent.TimeUnit;
-
-import static org.mockserver.matchers.Times.exactly;
-import static org.mockserver.model.HttpRequest.request;
-import static org.mockserver.model.HttpResponse.response;
 
 /**
  * @implNote Class to add mock server implementations
  */
 public class TestUtils {
 
-    public static void createExpectationForOcrApi(Integer port) {
-        new MockServerClient("127.0.0.1", port)
-                .when(request().withMethod("POST")
-                        .withPath("/document"), Times.once())
-                .respond(response().withStatusCode(HttpStatus.OK.value())
-                        .withHeaders(new Header("Content-Type", "application/json; charset=utf-8"),
-                                new Header("Cache-Control", "public, max-age=86400"))
-                        .withBody(getOcrResponse())
-                        .withDelay(TimeUnit.SECONDS, 1));
-    }
+//    public static void createExpectationForOcrApi(Integer port) {
+//        new MockServerClient("127.0.0.1", port)
+//                .when(request().withMethod("POST")
+//                        .withPath("/document"), Times.once())
+//                .respond(response().withStatusCode(HttpStatus.OK.value())
+//                        .withHeaders(new Header("Content-Type", "application/json; charset=utf-8"),
+//                                new Header("Cache-Control", "public, max-age=86400"))
+//                        .withBody(getOcrResponse())
+//                        .withDelay(TimeUnit.SECONDS, 1));
+//    }
 
     @NotNull
     public static String getOcrResponse() {
