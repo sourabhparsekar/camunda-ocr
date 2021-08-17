@@ -4,9 +4,10 @@ import com.example.workflow.utils.Constants
 import com.example.workflow.utils.TestUtils
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.camunda.bpm.scenario.ProcessScenario
+import org.json.JSONObject
+import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.mockito.ArgumentMatchers
 import org.mockito.ArgumentMatchers.any
 import org.mockito.ArgumentMatchers.eq
 import org.mockito.Mock
@@ -118,9 +119,14 @@ class DocumentOcrControllerProcessTest {
 
         val response: String = responseEntity.body;
         System.out.println("RESPONSE - $response");
+        val responseJson = JSONObject(response)
 
+        Assertions.assertEquals(true, responseJson.has("IsErroredOnProcessing"))
+        Assertions.assertEquals(false, responseJson.getBoolean("IsErroredOnProcessing"))
+        Assertions.assertEquals(true, responseJson.has("ParsedResults"))
 
-//        val handler = Scenario.run(scenario).startByKey("OcrDocument", variables).execute()
-        //  BpmnAwareTests.assertThat(handler.instance(scenario)).variables().containsEntry(Constants.REQUEST_STATUS, Status.SUCCESS)
+        val parsedJsonArrayResponse = responseJson.getJSONArray("ParsedResults")
+        Assertions.assertTrue(parsedJsonArrayResponse.length() > 0)
+
     }
 }
