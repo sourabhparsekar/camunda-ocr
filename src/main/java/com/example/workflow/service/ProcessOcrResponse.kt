@@ -23,8 +23,6 @@ class ProcessOcrResponse : JavaDelegate{
 
         //clean up the json
         for(parsedResult in parsedResults){
-//        for (page in 0 until parsedResultsJsonArray.length()) {
-//            val parsedResult: MutableMap<String, Any> = parsedResults as MutableMap<String, Any>
             parsedResult.remove("TextOrientation")
             parsedResult.remove("ParsedText")
             if(parsedResult.containsKey("FileParseExitCode")

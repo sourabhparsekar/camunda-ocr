@@ -14,16 +14,16 @@
       <bpmn:incoming>Flow_11sxr74</bpmn:incoming>
       <bpmn:outgoing>Flow_0bfha6m</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:exclusiveGateway id="Gateway_0fih3g7" name="Is Errored On Processing" default="Flow_12yqwwo">
+    <bpmn:exclusiveGateway id="Gateway_0fih3g7" name="Is Errored On Processing" default="Flow_0utbjgk">
       <bpmn:incoming>Flow_0bfha6m</bpmn:incoming>
       <bpmn:outgoing>Flow_0utbjgk</bpmn:outgoing>
       <bpmn:outgoing>Flow_12yqwwo</bpmn:outgoing>
     </bpmn:exclusiveGateway>
     <bpmn:sequenceFlow id="Flow_0bfha6m" sourceRef="documentOcrService" targetRef="Gateway_0fih3g7" />
-    <bpmn:sequenceFlow id="Flow_0utbjgk" name="Yes" sourceRef="Gateway_0fih3g7" targetRef="Activity_01u5tno">
+    <bpmn:sequenceFlow id="Flow_0utbjgk" name="Yes" sourceRef="Gateway_0fih3g7" targetRef="Activity_01u5tno" />
+    <bpmn:sequenceFlow id="Flow_12yqwwo" name="No" sourceRef="Gateway_0fih3g7" targetRef="Activity_0sxtgns">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${'ocr-response-status' == true}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="Flow_12yqwwo" sourceRef="Gateway_0fih3g7" targetRef="Activity_0sxtgns" />
     <bpmn:sequenceFlow id="Flow_0hukgy7" sourceRef="Activity_01u5tno" targetRef="Event_1n2pbwm" />
     <bpmn:endEvent id="Event_1fw82k7">
       <bpmn:incoming>Flow_1o9d8qi</bpmn:incoming>
@@ -53,19 +53,22 @@
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0utbjgk_di" bpmnElement="Flow_0utbjgk">
         <di:waypoint x="470" y="142" />
-        <di:waypoint x="470" y="230" />
-        <di:waypoint x="550" y="230" />
+        <di:waypoint x="470" y="210" />
+        <di:waypoint x="550" y="210" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="472" y="180" width="18" height="14" />
+          <dc:Bounds x="473" y="170" width="18" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_12yqwwo_di" bpmnElement="Flow_12yqwwo">
         <di:waypoint x="495" y="117" />
         <di:waypoint x="550" y="117" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="503" y="99" width="15" height="14" />
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0hukgy7_di" bpmnElement="Flow_0hukgy7">
-        <di:waypoint x="650" y="230" />
-        <di:waypoint x="722" y="230" />
+        <di:waypoint x="650" y="210" />
+        <di:waypoint x="722" y="210" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1o9d8qi_di" bpmnElement="Flow_1o9d8qi">
         <di:waypoint x="650" y="117" />
@@ -86,14 +89,14 @@
       <bpmndi:BPMNShape id="Event_1fw82k7_di" bpmnElement="Event_1fw82k7">
         <dc:Bounds x="722" y="99" width="36" height="36" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0360g60_di" bpmnElement="Activity_01u5tno">
-        <dc:Bounds x="550" y="190" width="100" height="80" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1w9oalr_di" bpmnElement="Activity_0sxtgns">
         <dc:Bounds x="550" y="77" width="100" height="80" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0360g60_di" bpmnElement="Activity_01u5tno">
+        <dc:Bounds x="550" y="170" width="100" height="80" />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_12pmsw9_di" bpmnElement="Event_1n2pbwm">
-        <dc:Bounds x="722" y="212" width="36" height="36" />
+        <dc:Bounds x="722" y="192" width="36" height="36" />
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

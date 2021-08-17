@@ -102,7 +102,7 @@ class DocumentOcrService : JavaDelegate {
                 WorkflowLogger.info(
                     logger,
                     "Document OCR",
-                    "Response Data $response"
+                    "Response Data received"
                 )
                 execution.setVariable(Constants.`OCR RESPONSE STATUS`, true)
             } else {
