@@ -4,6 +4,7 @@ import com.example.workflow.utils.Constants
 import com.example.workflow.utils.TestUtils
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.camunda.bpm.scenario.ProcessScenario
+import org.json.JSONArray
 import org.json.JSONObject
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeEach
@@ -41,35 +42,18 @@ class DocumentOcrControllerProcessTest {
 
     @Value("\${server.servlet.context-path}")
     private lateinit var contextPath: String
-
-    @Mock
-    private lateinit var scenario: ProcessScenario
+//
+//    @Mock
+//    private lateinit var scenario: ProcessScenario
 
     @MockBean
     private lateinit var restTemplate: RestTemplate
 
     private val formData: MultiValueMap<String, Any> = LinkedMultiValueMap()
 
-//    @Bean
-//    open fun objectMapper(): ObjectMapper? {
-//        return ObjectMapper().disable(SerializationFeature.FAIL_ON_EMPTY_BEANS)
-//    }
-
-    @Autowired
-    private lateinit var mapper: ObjectMapper
-
-//    @Bean
-//    fun mappingJackson2HttpMessageConverter(): MappingJackson2HttpMessageConverter? {
-//        val mapper = ObjectMapper()
-//        mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false)
-//        return MappingJackson2HttpMessageConverter(mapper)
-//    }
-
     @BeforeEach
     fun setup() {
         MockitoAnnotations.openMocks(this)
-
-//        mapper.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS)
 
         val documentFile: MultipartFile =
             MockMultipartFile(
@@ -94,7 +78,7 @@ class DocumentOcrControllerProcessTest {
                 any(HttpEntity::class.java),
                 eq(String::class.java)
             )
-        ).thenReturn(TestUtils.getOcrResponse())
+        ).thenReturn(TestUtils.ocrResponse)
 
         println("PORT :: $randomServerPort")
     }
@@ -119,14 +103,13 @@ class DocumentOcrControllerProcessTest {
 
         val response: String = responseEntity.body;
         System.out.println("RESPONSE - $response");
-        val responseJson = JSONObject(response)
+        val responseJsonArray = JSONArray(response)
 
-        Assertions.assertEquals(true, responseJson.has("IsErroredOnProcessing"))
-        Assertions.assertEquals(false, responseJson.getBoolean("IsErroredOnProcessing"))
-        Assertions.assertEquals(true, responseJson.has("ParsedResults"))
+        Assertions.assertEquals(1, responseJsonArray.length())
 
-        val parsedJsonArrayResponse = responseJson.getJSONArray("ParsedResults")
-        Assertions.assertTrue(parsedJsonArrayResponse.length() > 0)
+        val responseJson = responseJsonArray.getJSONObject(0)
+        Assertions.assertEquals("Total lines: 7", responseJson.getJSONObject("TextOverlay").getString("Message"))
+
 
     }
 }

@@ -3,7 +3,7 @@ package com.example.workflow.utils
 class Constants private constructor() {
 
     companion object {
-        const val `IS ERRORED ON PROCESSING`= "IsErroredOnProcessing"
+        const val `IS ERRORED ON PROCESSING` = "IsErroredOnProcessing"
         const val `OCR RESPONSE STATUS` = "ocr_response_status"
         const val `OCR RESPONSE` = "ocr_response"
         const val DOCUMENT = "document"

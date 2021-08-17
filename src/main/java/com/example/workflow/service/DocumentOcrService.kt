@@ -3,7 +3,6 @@ package com.example.workflow.service
 import com.example.workflow.configuration.ApplicationProperties
 import com.example.workflow.utils.Constants
 import com.example.workflow.utils.WorkflowLogger
-import org.camunda.bpm.engine.delegate.BpmnError
 import org.camunda.bpm.engine.delegate.DelegateExecution
 import org.camunda.bpm.engine.delegate.JavaDelegate
 import org.camunda.bpm.engine.variable.impl.value.FileValueImpl

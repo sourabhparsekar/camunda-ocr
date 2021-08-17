@@ -1,0 +1,96 @@
+{
+	"info": {
+		"_postman_id": "94a0ae45-e214-4a21-bcaa-b0eb340ded07",
+		"name": "Camunda Document OCR",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "New OCR Request",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "document",
+							"type": "file",
+							"src": "/C:/Users/sourabh_parsekar/Desktop/sample-documents/images.jpg"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:10101/camunda-ocr/document",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "10101",
+					"path": [
+						"camunda-ocr",
+						"document"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "New Request",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "document",
+									"type": "file",
+									"src": "/C:/Users/sourabh_parsekar/Desktop/sample-documents/images.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:10101/camunda-ocr/document",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "10101",
+							"path": [
+								"camunda-ocr",
+								"document"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 17 Aug 2021 18:22:09 GMT"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=60"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "[\n    {\n        \"TextOverlay\": {\n            \"Message\": \"Total lines: 6\",\n            \"Lines\": [\n                {\n                    \"LineText\": \"LLIINOIS\",\n                    \"MinTop\": 10,\n                    \"Words\": [\n                        {\n                            \"Left\": 22,\n                            \"Top\": 10,\n                            \"Height\": 16,\n                            \"WordText\": \"LLIINOIS\",\n                            \"Width\": 76\n                        }\n                    ],\n                    \"MaxHeight\": 16\n                },\n                {\n                    \"LineText\": \"DRIVER'S LICENSE\",\n                    \"MinTop\": 31,\n                    \"Words\": [\n                        {\n                            \"Left\": 194,\n                            \"Top\": 31,\n                            \"Height\": 8,\n                            \"WordText\": \"DRIVER'S\",\n                            \"Width\": 44\n                        },\n                        {\n                            \"Left\": 241,\n                            \"Top\": 31,\n                            \"Height\": 8,\n                            \"WordText\": \"LICENSE\",\n                            \"Width\": 40\n                        }\n                    ],\n                    \"MaxHeight\": 8\n                },\n                {\n                    \"LineText\": \"0400-7836-0001\",\n                    \"MinTop\": 52,\n                    \"Words\": [\n                        {\n                            \"Left\": 131,\n                            \"Top\": 52,\n                            \"Height\": 11,\n                            \"WordText\": \"0400-7836-0001\",\n                            \"Width\": 91\n                        }\n                    ],\n                    \"MaxHeight\": 11\n                },\n                {\n                    \"LineText\": \"08-13-07\",\n                    \"MinTop\": 88,\n                    \"Words\": [\n                        {\n                            \"Left\": 131,\n                            \"Top\": 88,\n                            \"Height\": 10,\n                            \"WordText\": \"08-13-07\",\n                            \"Width\": 50\n                        }\n                    ],\n                    \"MaxHeight\": 10\n                },\n                {\n                    \"LineText\": \"CARO oe•-\",\n                    \"MinTop\": 107,\n                    \"Words\": [\n                        {\n                            \"Left\": 130,\n                            \"Top\": 107,\n                            \"Height\": 8,\n                            \"WordText\": \"CARO\",\n                            \"Width\": 21\n                        },\n                        {\n                            \"Left\": 152,\n                            \"Top\": 107,\n                            \"Height\": 7,\n                            \"WordText\": \"oe•-\",\n                            \"Width\": 23\n                        }\n                    ],\n                    \"MaxHeight\": 8\n                },\n                {\n                    \"LineText\": \"TOWN n 606io\",\n                    \"MinTop\": 122,\n                    \"Words\": [\n                        {\n                            \"Left\": 116,\n                            \"Top\": 124,\n                            \"Height\": 7,\n                            \"WordText\": \"TOWN\",\n                            \"Width\": 24\n                        },\n                        {\n                            \"Left\": 142,\n                            \"Top\": 124,\n                            \"Height\": 7,\n                            \"WordText\": \"n\",\n                            \"Width\": 7\n                        },\n                        {\n                            \"Left\": 152,\n                            \"Top\": 122,\n                            \"Height\": 9,\n                            \"WordText\": \"606io\",\n                            \"Width\": 24\n                        }\n                    ],\n                    \"MaxHeight\": 9\n                }\n            ],\n            \"HasOverlay\": true\n        }\n    }\n]"
+				}
+			]
+		}
+	]
+}

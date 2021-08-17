@@ -6,7 +6,7 @@ import org.camunda.bpm.spring.boot.starter.configuration.impl.AbstractCamundaCon
 import org.springframework.stereotype.Component
 
 @Component
-class CamundaConfiguration : AbstractCamundaConfiguration(){
+class CamundaConfiguration : AbstractCamundaConfiguration() {
 
     override fun preInit(processEngineConfiguration: SpringProcessEngineConfiguration?) {
         super.preInit(processEngineConfiguration)

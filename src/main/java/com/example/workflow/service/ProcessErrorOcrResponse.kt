@@ -17,7 +17,7 @@ class ProcessErrorOcrResponse : JavaDelegate {
 
         WorkflowLogger.info(logger, "Prepare Error Response", "Process instance id ${execution!!.processInstanceId}")
 
-        var map: MutableMap<String, Any> = execution?.getVariable(Constants.`OCR RESPONSE`) as MutableMap<String, Any>
+        var map: MutableMap<String, Any> = execution.getVariable(Constants.`OCR RESPONSE`) as MutableMap<String, Any>
 
         if (map != null) {
 

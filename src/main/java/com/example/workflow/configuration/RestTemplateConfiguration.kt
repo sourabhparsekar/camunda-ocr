@@ -12,7 +12,7 @@ import org.springframework.web.client.RestTemplate
 open class RestTemplateConfiguration {
 
     @Bean
-    open fun restTemplate(restTemplateBuilder: RestTemplateBuilder ): RestTemplate {
+    open fun restTemplate(restTemplateBuilder: RestTemplateBuilder): RestTemplate {
         return restTemplateBuilder.build()
     }
 
