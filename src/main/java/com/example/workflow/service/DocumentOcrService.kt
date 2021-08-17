@@ -99,19 +99,12 @@ class DocumentOcrService : JavaDelegate {
             if (response.has(Constants.`IS ERRORED ON PROCESSING`)
                 && !(response[Constants.`IS ERRORED ON PROCESSING`] as Boolean)
             ) {
-
                 WorkflowLogger.info(
                     logger,
                     "Document OCR",
                     "Response Data $response"
                 )
-
-                val map = response.toMap()
-
                 execution.setVariable(Constants.`OCR RESPONSE STATUS`, true)
-
-                execution.setVariable(Constants.`OCR RESPONSE`, map)
-
             } else {
                 WorkflowLogger.error(
                     logger,
@@ -120,6 +113,8 @@ class DocumentOcrService : JavaDelegate {
                 )
                 execution.setVariable(Constants.`OCR RESPONSE STATUS`, false)
             }
+
+            execution.setVariable(Constants.`OCR RESPONSE`, response.toMap())
 
         } catch (e: RestClientException) {
             WorkflowLogger.error(
