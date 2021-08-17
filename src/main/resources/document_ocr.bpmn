@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_1pzmml5" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="4.8.1" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.15.0">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_1pzmml5" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="4.8.1" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.15.0">
   <bpmn:process id="OcrDocument" name="Ocr Document" isExecutable="true">
     <bpmn:startEvent id="StartEvent_1">
       <bpmn:extensionElements>
@@ -10,33 +10,90 @@
       <bpmn:outgoing>Flow_11sxr74</bpmn:outgoing>
     </bpmn:startEvent>
     <bpmn:sequenceFlow id="Flow_11sxr74" sourceRef="StartEvent_1" targetRef="documentOcrService" />
-    <bpmn:endEvent id="Event_1vp2es0">
-      <bpmn:incoming>Flow_0fgpzcs</bpmn:incoming>
-    </bpmn:endEvent>
-    <bpmn:sequenceFlow id="Flow_0fgpzcs" sourceRef="documentOcrService" targetRef="Event_1vp2es0" />
-    <bpmn:serviceTask id="documentOcrService" name="Document OCR" camunda:delegateExpression="#{documentOcrService}">
+    <bpmn:serviceTask id="documentOcrService" name="Perform Document OCR" camunda:delegateExpression="#{documentOcrService}">
       <bpmn:incoming>Flow_11sxr74</bpmn:incoming>
-      <bpmn:outgoing>Flow_0fgpzcs</bpmn:outgoing>
+      <bpmn:outgoing>Flow_0bfha6m</bpmn:outgoing>
     </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="Gateway_0fih3g7" name="Is Errored On Processing" default="Flow_12yqwwo">
+      <bpmn:incoming>Flow_0bfha6m</bpmn:incoming>
+      <bpmn:outgoing>Flow_0utbjgk</bpmn:outgoing>
+      <bpmn:outgoing>Flow_12yqwwo</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_0bfha6m" sourceRef="documentOcrService" targetRef="Gateway_0fih3g7" />
+    <bpmn:sequenceFlow id="Flow_0utbjgk" name="Yes" sourceRef="Gateway_0fih3g7" targetRef="Activity_01u5tno">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${'ocr-response-status' == true}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_12yqwwo" sourceRef="Gateway_0fih3g7" targetRef="Activity_0sxtgns" />
+    <bpmn:sequenceFlow id="Flow_0hukgy7" sourceRef="Activity_01u5tno" targetRef="Event_1n2pbwm" />
+    <bpmn:endEvent id="Event_1fw82k7">
+      <bpmn:incoming>Flow_1o9d8qi</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_1o9d8qi" sourceRef="Activity_0sxtgns" targetRef="Event_1fw82k7" />
+    <bpmn:serviceTask id="Activity_01u5tno" name="Set Error Response" camunda:delegateExpression="#{setErrorResponse}">
+      <bpmn:incoming>Flow_0utbjgk</bpmn:incoming>
+      <bpmn:outgoing>Flow_0hukgy7</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="Activity_0sxtgns" name="Set Line Response" camunda:delegateExpression="#{setLineResponse}">
+      <bpmn:incoming>Flow_12yqwwo</bpmn:incoming>
+      <bpmn:outgoing>Flow_1o9d8qi</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:endEvent id="Event_1n2pbwm">
+      <bpmn:incoming>Flow_0hukgy7</bpmn:incoming>
+    </bpmn:endEvent>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="OcrDocument">
-      <bpmndi:BPMNEdge id="Flow_0fgpzcs_di" bpmnElement="Flow_0fgpzcs">
-        <di:waypoint x="370" y="117" />
-        <di:waypoint x="432" y="117" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_11sxr74_di" bpmnElement="Flow_11sxr74">
         <di:waypoint x="215" y="117" />
         <di:waypoint x="270" y="117" />
       </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0bfha6m_di" bpmnElement="Flow_0bfha6m">
+        <di:waypoint x="370" y="117" />
+        <di:waypoint x="445" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0utbjgk_di" bpmnElement="Flow_0utbjgk">
+        <di:waypoint x="470" y="142" />
+        <di:waypoint x="470" y="230" />
+        <di:waypoint x="550" y="230" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="472" y="180" width="18" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_12yqwwo_di" bpmnElement="Flow_12yqwwo">
+        <di:waypoint x="495" y="117" />
+        <di:waypoint x="550" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0hukgy7_di" bpmnElement="Flow_0hukgy7">
+        <di:waypoint x="650" y="230" />
+        <di:waypoint x="722" y="230" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1o9d8qi_di" bpmnElement="Flow_1o9d8qi">
+        <di:waypoint x="650" y="117" />
+        <di:waypoint x="722" y="117" />
+      </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
         <dc:Bounds x="179" y="99" width="36" height="36" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_1vp2es0_di" bpmnElement="Event_1vp2es0">
-        <dc:Bounds x="432" y="99" width="36" height="36" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1lr1bbc_di" bpmnElement="documentOcrService">
         <dc:Bounds x="270" y="77" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_0fih3g7_di" bpmnElement="Gateway_0fih3g7" isMarkerVisible="true">
+        <dc:Bounds x="445" y="92" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="437" y="55" width="67" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1fw82k7_di" bpmnElement="Event_1fw82k7">
+        <dc:Bounds x="722" y="99" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0360g60_di" bpmnElement="Activity_01u5tno">
+        <dc:Bounds x="550" y="190" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1w9oalr_di" bpmnElement="Activity_0sxtgns">
+        <dc:Bounds x="550" y="77" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_12pmsw9_di" bpmnElement="Event_1n2pbwm">
+        <dc:Bounds x="722" y="212" width="36" height="36" />
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

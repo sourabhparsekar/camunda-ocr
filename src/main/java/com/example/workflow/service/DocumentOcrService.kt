@@ -6,6 +6,7 @@ import com.example.workflow.utils.WorkflowLogger
 import org.camunda.bpm.engine.delegate.BpmnError
 import org.camunda.bpm.engine.delegate.DelegateExecution
 import org.camunda.bpm.engine.delegate.JavaDelegate
+import org.camunda.bpm.engine.variable.impl.type.PrimitiveValueTypeImpl
 import org.camunda.bpm.engine.variable.impl.value.FileValueImpl
 import org.json.JSONObject
 import org.slf4j.LoggerFactory
@@ -112,7 +113,13 @@ class DocumentOcrService : JavaDelegate {
                 "Response Data $response"
             )
 
-            execution.setVariable(Constants.`OCR RESPONSE`, response.toMap())
+            val map = response.toMap();
+
+            map.putIfAbsent(Constants.`IS ERRORED ON PROCESSING`, true)
+
+            execution.setVariable(Constants.`OCR RESPONSE STATUS`, map[Constants.`IS ERRORED ON PROCESSING`] as Boolean)
+
+            execution.setVariable(Constants.`OCR RESPONSE`, map)
 
 //            } else {
 //
