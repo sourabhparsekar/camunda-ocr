@@ -6,7 +6,6 @@ import com.example.workflow.utils.WorkflowLogger
 import org.camunda.bpm.engine.delegate.BpmnError
 import org.camunda.bpm.engine.delegate.DelegateExecution
 import org.camunda.bpm.engine.delegate.JavaDelegate
-import org.camunda.bpm.engine.variable.impl.type.PrimitiveValueTypeImpl
 import org.camunda.bpm.engine.variable.impl.value.FileValueImpl
 import org.json.JSONObject
 import org.slf4j.LoggerFactory
@@ -97,82 +96,48 @@ class DocumentOcrService : JavaDelegate {
 
             val response = JSONObject(resString)
 
-//            if (response.has(Constants.STATUS)
-//                && !response.isNull(Constants.STATUS)
-//                && Constants.RESPONSE_SUCCESS.equals(
-//                    response.getString(Constants.STATUS),
-//                    true
-//                )
-//            ) {
+            if (response.has(Constants.`IS ERRORED ON PROCESSING`)
+                && !(response[Constants.`IS ERRORED ON PROCESSING`] as Boolean)
+            ) {
 
-//            val dataJson = response.getJSONObject("data")
+                WorkflowLogger.info(
+                    logger,
+                    "Document OCR",
+                    "Response Data $response"
+                )
 
-            WorkflowLogger.info(
-                logger,
-                "Document Verification Invoked",
-                "Response Data $response"
-            )
+                val map = response.toMap()
 
-            val map = response.toMap();
+                execution.setVariable(Constants.`OCR RESPONSE STATUS`, true)
 
-            map.putIfAbsent(Constants.`IS ERRORED ON PROCESSING`, true)
+                execution.setVariable(Constants.`OCR RESPONSE`, map)
 
-            execution.setVariable(Constants.`OCR RESPONSE STATUS`, map[Constants.`IS ERRORED ON PROCESSING`] as Boolean)
+            } else {
+                WorkflowLogger.error(
+                    logger,
+                    Constants.`DOCUMENT OCR FAILED`,
+                    "Failed to submit document for OCR. $resString"
+                )
+                execution.setVariable(Constants.`OCR RESPONSE STATUS`, false)
+            }
 
-            execution.setVariable(Constants.`OCR RESPONSE`, map)
-
-//            } else {
-//
-//                WorkflowLogger.error(
-//                    logger,
-//                    `DOCUMENT VERIFICATION FAILED`,
-//                    "Failed to submit document for verification. $resString"
-//                )
-//
-//                throw BpmnError(
-//                    Constants.RESPONSE_FAILURE_CODE,
-//                    "Failed to submit document for verification. $resString"
-//                )
-//
-//            }
-//
         } catch (e: RestClientException) {
-
             WorkflowLogger.error(
                 logger,
                 Constants.`DOCUMENT OCR FAILED`,
                 "Rest Client Exception.",
                 e
             )
-
-            throw BpmnError(
-                Constants.`INTERNAL SERVE ERROR`,
-                e.message,
-                e
-            )
-
         } catch (e: Exception) {
-
             WorkflowLogger.error(
                 logger,
                 Constants.`DOCUMENT OCR FAILED`,
                 "Unknown Exception.",
                 e
             )
-
-            throw BpmnError(
-                Constants.`INTERNAL SERVE ERROR`,
-                e.message,
-                e
-            )
-
         } finally {
             //delete document
             execution.removeVariable(Constants.DOCUMENT)
         }
-//
-//    }
-
-
     }
 }
