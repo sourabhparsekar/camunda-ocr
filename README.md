@@ -25,6 +25,10 @@ The free OCR API plan we are using to demo the application, has
 
 You can check the API performance and uptime at the [API status page](https://status.ocr.space/)
 
+**Note:** _The API Key that you have received from OCR Space would be set in [application.yaml](./src/main/resources/application.yaml) file_   
+    
+> `ocr-space.key` = _your_api_key_
+
 ## Camunda Workflow:
 As per [Wikipedia](https://en.wikipedia.org/wiki/Camunda), Camunda Platform is an open-source workflow
 and decision automation platform. Camunda Platform ships with tools for creating workflow and decision 
@@ -154,7 +158,7 @@ Logs for **End to End Process**
 2021-08-17 23:35:37,707 INFO  [http-nio-10101-exec-1] com.example.workflow.controller.DocumentOcrController: Timestamp:1629223537707:workflow-service-info:Camunda Workflow Completed:Instance Id: b8765ce0-ff85-11eb-8bbb-dc7196c5d636
 ```
 
-_Thus we have implemented Document OCR using Kotlin and Camunda Workflow!!_
+_Thus, we have implemented Document OCR using Kotlin and Camunda Workflow!!_
 
 ***
 ### Appendix - Deployment as Docker container

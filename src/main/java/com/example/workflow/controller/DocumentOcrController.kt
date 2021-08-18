@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.multipart.MultipartFile
 import java.nio.charset.Charset
 import javax.activation.MimetypesFileTypeMap
+import javax.servlet.http.HttpServletResponse
 import javax.validation.constraints.NotNull
 
 @RestController

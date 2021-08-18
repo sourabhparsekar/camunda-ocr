@@ -2,19 +2,14 @@ package com.example.workflow.controller
 
 import com.example.workflow.utils.Constants
 import com.example.workflow.utils.TestUtils
-import com.fasterxml.jackson.databind.ObjectMapper
-import org.camunda.bpm.scenario.ProcessScenario
 import org.json.JSONArray
-import org.json.JSONObject
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.mockito.ArgumentMatchers.any
 import org.mockito.ArgumentMatchers.eq
-import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.MockitoAnnotations
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.mock.mockito.MockBean
@@ -93,7 +88,7 @@ class DocumentOcrControllerProcessTest {
         val entity: HttpEntity<MultiValueMap<String, Any>> = HttpEntity(formData, headers)
 
         val url: URI = URI("http://127.0.0.1:$randomServerPort$contextPath/document")
-        println(url);
+        println(url)
 
         val responseEntity: ResponseEntity<String> = TestRestTemplate().postForEntity(
             url,
@@ -101,8 +96,8 @@ class DocumentOcrControllerProcessTest {
             String::class.java
         )
 
-        val response: String = responseEntity.body;
-        System.out.println("RESPONSE - $response");
+        val response: String = responseEntity.body
+        System.out.println("RESPONSE - $response")
         val responseJsonArray = JSONArray(response)
 
         Assertions.assertEquals(1, responseJsonArray.length())
