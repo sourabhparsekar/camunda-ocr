@@ -15,6 +15,8 @@ object TestUtils {
     //                        .withDelay(TimeUnit.SECONDS, 1));
     //    }
 
+
+
     val ocrResponse: String
         get() = """{
   "IsErroredOnProcessing": false,
@@ -191,4 +193,21 @@ object TestUtils {
   "SearchablePDFURL": "Searchable PDF not generated as it was not requested.",
   "OCRExitCode": 1
 }"""
+
+    val ocrErrorResponse: String
+        get() = "{" +
+                "\"IsErroredOnProcessing\": false," +
+                "\"ParsedResults\": [{" +
+                "\"TextOrientation\": \"0\"," +
+                "\"ParsedText\": \"CALIFORNIAA DRIVER LIC\"," +
+                "\"FileParseExitCode\": 0," +
+                "\"ErrorDetails\": \"Test Error Details\"," +
+                "\"ErrorMessage\": \"Test Error Message\"," +
+                "\"TextOverlay\": \"\"" +
+                "}]," +
+                "\"ProcessingTimeInMilliseconds\": \"24428\"," +
+                "\"SearchablePDFURL\": \"Searchable PDF not generated as it was not requested.\"," +
+                "\"OCRExitCode\": 1" +
+                "}"
+
 }

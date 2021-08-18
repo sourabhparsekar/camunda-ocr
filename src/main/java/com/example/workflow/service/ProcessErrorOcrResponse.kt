@@ -21,7 +21,7 @@ class ProcessErrorOcrResponse : JavaDelegate {
             var map: MutableMap<String, Any> =
                 execution.getVariable(Constants.`OCR RESPONSE`) as MutableMap<String, Any>
 
-            if (map != null) {
+            if (map.isNotEmpty()) {
 
                 val parsedResults: List<MutableMap<String, Any>> = map["ParsedResults"] as List<MutableMap<String, Any>>
 
