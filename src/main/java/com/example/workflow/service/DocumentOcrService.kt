@@ -122,6 +122,8 @@ class DocumentOcrService : JavaDelegate {
                 "Rest Client Exception.",
                 e
             )
+            execution.setVariable(Constants.`OCR RESPONSE STATUS`, false)
+            execution.setVariable(Constants.`OCR RESPONSE EXCEPTION`, e.message)
         } catch (e: Exception) {
             WorkflowLogger.error(
                 logger,
@@ -129,6 +131,8 @@ class DocumentOcrService : JavaDelegate {
                 "Unknown Exception.",
                 e
             )
+            execution.setVariable(Constants.`OCR RESPONSE STATUS`, false)
+            execution.setVariable(Constants.`OCR RESPONSE EXCEPTION`, e.message)
         } finally {
             //delete document
             execution.removeVariable(Constants.DOCUMENT)

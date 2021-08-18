@@ -17,20 +17,36 @@ class ProcessErrorOcrResponse : JavaDelegate {
 
         WorkflowLogger.info(logger, "Prepare Error Response", "Process instance id ${execution!!.processInstanceId}")
 
-        var map: MutableMap<String, Any> = execution.getVariable(Constants.`OCR RESPONSE`) as MutableMap<String, Any>
+        if (execution.hasVariable(Constants.`OCR RESPONSE`)) {
+            var map: MutableMap<String, Any> =
+                execution.getVariable(Constants.`OCR RESPONSE`) as MutableMap<String, Any>
 
-        if (map != null) {
+            if (map != null) {
 
-            val parsedResults: List<MutableMap<String, Any>> = map["ParsedResults"] as List<MutableMap<String, Any>>
+                val parsedResults: List<MutableMap<String, Any>> = map["ParsedResults"] as List<MutableMap<String, Any>>
 
-            //clean up the json
-            for (parsedResult in parsedResults) {
-                parsedResult.remove("TextOrientation")
-                parsedResult.remove("TextOverlay")
+                //clean up the json
+                for (parsedResult in parsedResults) {
+                    parsedResult.remove("TextOrientation")
+                    parsedResult.remove("TextOverlay")
+                }
+
+                execution.setVariable(Constants.`OCR RESPONSE`, parsedResults)
+            } else {
+                val errorMap: MutableMap<String, Any> = mutableMapOf()
+                errorMap.put("FileParseExitCode", HttpStatus.UNPROCESSABLE_ENTITY)
+                errorMap.put("ErrorDetails", HttpStatus.UNPROCESSABLE_ENTITY.name)
+                errorMap.put("ErrorMessage", Constants.`DOCUMENT OCR FAILED`)
+
+                execution.setVariable(Constants.`OCR RESPONSE`, mutableListOf(errorMap))
             }
+        } else if (execution.hasVariable(Constants.`OCR RESPONSE EXCEPTION`)) {
+            val errorMap: MutableMap<String, Any> = mutableMapOf()
+            errorMap.put("FileParseExitCode", HttpStatus.INTERNAL_SERVER_ERROR)
+            errorMap.put("ErrorDetails", Constants.`INTERNAL SERVE ERROR`)
+            errorMap.put("ErrorMessage", execution.getVariable(Constants.`OCR RESPONSE EXCEPTION`))
 
-            execution.setVariable(Constants.`OCR RESPONSE`, parsedResults)
-
+            execution.setVariable(Constants.`OCR RESPONSE`, mutableListOf(errorMap))
         } else {
             val errorMap: MutableMap<String, Any> = mutableMapOf()
             errorMap.put("FileParseExitCode", HttpStatus.INTERNAL_SERVER_ERROR)
@@ -39,6 +55,7 @@ class ProcessErrorOcrResponse : JavaDelegate {
 
             execution.setVariable(Constants.`OCR RESPONSE`, mutableListOf(errorMap))
         }
+
 
         WorkflowLogger.error(
             logger,
