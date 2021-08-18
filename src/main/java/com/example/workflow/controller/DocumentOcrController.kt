@@ -4,6 +4,7 @@ import com.example.workflow.utils.Constants
 import com.example.workflow.utils.WorkflowLogger
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.Parameter
+import io.swagger.v3.oas.annotations.responses.ApiResponse
 import org.camunda.bpm.engine.RuntimeService
 import org.camunda.bpm.engine.variable.impl.value.FileValueImpl
 import org.camunda.bpm.engine.variable.type.FileValueType
@@ -32,6 +33,7 @@ class DocumentOcrController {
         consumes = ["multipart/form-data", MediaType.APPLICATION_OCTET_STREAM_VALUE]
     )
     @Operation(summary = "Perform Document OCR")
+    @ApiResponse
     fun ocrDocuments(
         @Parameter(
             required = true,
@@ -67,7 +69,7 @@ class DocumentOcrController {
         ) {
             ResponseEntity.ok().body(responseVariables[Constants.`OCR RESPONSE`])
         } else {
-            ResponseEntity.badRequest().body(responseVariables[Constants.`OCR RESPONSE`])
+            ResponseEntity.unprocessableEntity().body(responseVariables[Constants.`OCR RESPONSE`])
         }
 
     }
